@@ -18,6 +18,10 @@ export default class FileRequest {
     return path.join( this.entryDir, customPath + '.md')
   }
 
+  id2filePath(article: Article): string {
+    return path.join( this.entryDir, article.id + '.md')
+  }
+
   private filePath2customUrl(filePath: string): Promise<string> {
     const regex = new RegExp( `^${this.entryDir}${path.sep}(.+)\\.md$` )
     if(! regex.test(filePath) ) {
@@ -69,7 +73,7 @@ export default class FileRequest {
       console.error('customUrl or id is null')
       process.exit(-1)
     }
-    const filePath = this.customUrl2filePath(article)
+    const filePath = this.id2filePath(article)
     await fs.mkdir(path.dirname(filePath), {recursive: true})
     return fs.writeFile(filePath, fileString, 'utf-8').then(
      () => {
@@ -79,7 +83,7 @@ export default class FileRequest {
   }
 
   async delete(article: Article) {
-    const filePath = this.customUrl2filePath(article)
+    const filePath = this.id2filePath(article)
     await fs.unlink(filePath)
   }
 }
