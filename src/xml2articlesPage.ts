@@ -9,7 +9,7 @@ interface ArticlePage {
 const tryEntry2Article = (entry:any): Article  => {
   const id = entry.id[0].split('-').pop()
   const url = (entry.link.find((e:any)=>e.$.rel==='alternate').$.href)
-  const customUrl = url.match(/^https:\/\/[^\/]+\/entry\/(.+)$/)[1]
+  const customUrl = id
   const title = entry.title[0]
   const date = new Date( entry.updated[0] )
   const editedDate = new Date(entry['app:edited'])
